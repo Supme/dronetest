@@ -9,5 +9,5 @@ steps:
   - name: test
     image: golang
     commands:
-      - go test
       - go build
+      - go test -v
