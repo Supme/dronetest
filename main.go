@@ -15,7 +15,7 @@ func main() {
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	//w.WriteHeader(http.StatusForbidden)
-	_, err := w.Write([]byte("Hello world!"))
+	_, err := w.Write([]byte("Hello, world!"))
 	if err != nil {
 		log.Print(err)
 	}
