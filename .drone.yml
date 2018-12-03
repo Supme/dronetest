@@ -1,0 +1,13 @@
+kind: pipeline
+name: dronetest
+
+workspace:
+  base: /data
+  path: go/src/github.ru/supme/dronetest
+
+steps:
+  - name: test
+    image: golang
+    commands:
+ #     - go build
+      - go test
