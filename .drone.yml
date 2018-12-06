@@ -1,5 +1,5 @@
 kind: pipeline
-name: dronetest
+name: build
 
 workspace:
   base: /data
