@@ -1,13 +1,14 @@
 kind: pipeline
 name: build
 
-#workspace:
-#  base: /data
-#  path: go/src/github.ru/supme/dronetest
+workspace:
+  base: /data
+  path: go/src/github.ru/supme/dronetest
 
 steps:
-  - name: test_go
+  - name: test
       image: golang
       commands:
+	- go get
         - go build
         - go test -v
