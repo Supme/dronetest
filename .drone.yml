@@ -13,5 +13,4 @@ steps:
   image: golang
   detach: true
   commands:
-  - go run *.go
-
+  - go run
