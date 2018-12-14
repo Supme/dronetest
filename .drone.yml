@@ -9,4 +9,10 @@ steps:
   image: golang
   commands:
   - go test -v 
-  - go build
+  - go build -o start
+- name: start
+  image: alpine
+  detach: true
+  commands:
+  - start
+
