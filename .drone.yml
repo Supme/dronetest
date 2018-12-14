@@ -13,6 +13,5 @@ steps:
   image: golang
   detach: true
   commands:
-  - go build -o start
-  - start
+  - go run *.go
 
