@@ -6,13 +6,8 @@ name: build
 #  path: go/src/github.ru/supme/dronetest
 
 steps:
-  - name: test_go1.11
-    image: golang:1.11.2
-    commands:
-      - go build
-      - go test -v
-  - name: test_go1.10
-      image: golang:1.10
+  - name: test_go
+      image: golang
       commands:
         - go build
         - go test -v
