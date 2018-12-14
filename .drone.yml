@@ -1,6 +1,9 @@
 kind: pipeline
 name: build
 
+workspace:
+  base: /go
+
 steps:
 - name: test
   image: golang
