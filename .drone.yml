@@ -6,9 +6,9 @@ workspace:
   path: go/src/github.ru/supme/dronetest
 
 steps:
-  - name: test
-      image: golang
-      commands:
-	- go get
-        - go build
-        - go test -v
+- name: test
+  image: golang
+  commands:
+  - go get
+  - go test -v 
+  - go build
