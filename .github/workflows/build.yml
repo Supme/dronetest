@@ -29,17 +29,7 @@ jobs:
     - name: Build
       run: go build -ldflags "-s -w" -o application_${{ steps.get_version.outputs.APP_VERSION }} ./main.go
 
-    - name: Prepare Release
-      run: |
-        mkdir output
-        copy .\application_${{ steps.get_version.outputs.APP_VERSION }} .\output
-
-    - name: Download artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: application_${{ steps.get_version.outputs.APP_VERSION }}
-
     - name: Create release
       run: |
-        gh release create "${APP_VERSION}" -t "${APP_VERSION}"
-        gh release upload "${APP_VERSION}" application_* --clobber
+        gh release create "${{ steps.get_version.outputs.APP_VERSION }}" -t "${{ steps.get_version.outputs.APP_VERSION }}"
+        gh release upload "${{ steps.get_version.outputs.APP_VERSION }}" application_* --clobber
