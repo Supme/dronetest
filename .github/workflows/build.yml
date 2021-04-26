@@ -28,5 +28,9 @@ jobs:
 
     - name: Create release
       run: |
-        gh release create "${{ steps.get_version.outputs.VERSION }}" -t "${{ steps.get_version.outputs.VERSION }}"
-        gh release upload "${{ steps.get_version.outputs.VERSION }}" application_* --clobber
+        gh release create "${APP_VERSION}" -t "${APP_VERSION}"
+        gh release upload "${APP_VERSION}" application_* --clobber
+        gh release view "${APP_VERSION}"
+      env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          APP_VERSION: ${{ steps.get_version.outputs.VERSION }}
