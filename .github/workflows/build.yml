@@ -32,9 +32,9 @@ jobs:
     - name: Prepare Release
       run: |
         mkdir output
-        copy .\start .\output
+        copy .\start_${{ steps.get_version.outputs.APP_VERSION }} .\output
 
-    - name: Download amd64 artifact
+    - name: Download artifact
       uses: actions/download-artifact@v2
       with:
         name: sftpgo_${{ steps.get_version.outputs.APP_VERSION }}
