@@ -23,25 +23,23 @@ jobs:
         echo ::set-output name=APP_VERSION::${GITHUB_REF/refs\/tags\//}
       shell: bash
 
-    - name: Build
-      run: go build -ldflags "-s -w" -o start_${{ steps.get_version.outputs.APP_VERSION }} ./main.go
-
     - name: Test
       run: go test -v ./...
+
+    - name: Build
+      run: go build -ldflags "-s -w" -o application_${{ steps.get_version.outputs.APP_VERSION }} ./main.go
 
     - name: Prepare Release
       run: |
         mkdir output
-        copy .\start_${{ steps.get_version.outputs.APP_VERSION }} .\output
+        copy .\application_${{ steps.get_version.outputs.APP_VERSION }} .\output
 
     - name: Download artifact
       uses: actions/download-artifact@v2
       with:
-        name: sftpgo_${{ steps.get_version.outputs.APP_VERSION }}
+        name: application_${{ steps.get_version.outputs.APP_VERSION }}
 
     - name: Create release
       run: |
-        mv sftpgo_windows_x86_64.exe sftpgo_${SFTPGO_VERSION}_windows_x86_64.exe
-        mv sftpgo_portable_x86_64.zip sftpgo_${SFTPGO_VERSION}_windows_portable_x86_64.zip
         gh release create "${APP_VERSION}" -t "${APP_VERSION}"
-        gh release upload "${APP_VERSION}" start_* --clobber
+        gh release upload "${APP_VERSION}" application_* --clobber
