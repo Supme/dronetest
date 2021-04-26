@@ -19,17 +19,15 @@ jobs:
 
     - name: Get versions
       id: get_version
-      run: |
-        echo ::set-output name=APP_VERSION::v0.0.0
-      shell: bash
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
     - name: Test
       run: go test -v ./...
 
     - name: Build
-      run: go build -ldflags "-s -w" -o application_${{ steps.get_version.outputs.APP_VERSION }} ./main.go
+      run: go build -ldflags "-s -w" -o application_${{ steps.get_version.outputs.VERSION }} ./main.go
 
     - name: Create release
       run: |
-        gh release create "${{ steps.get_version.outputs.APP_VERSION }}" -t "${{ steps.get_version.outputs.APP_VERSION }}"
-        gh release upload "${{ steps.get_version.outputs.APP_VERSION }}" application_* --clobber
+        gh release create "${{ steps.get_version.outputs.VERSION }}" -t "${{ steps.get_version.outputs.VERSION }}"
+        gh release upload "${{ steps.get_version.outputs.VERSION }}" application_* --clobber
