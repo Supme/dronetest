@@ -14,7 +14,6 @@ jobs:
             os: linux
           - arch: amd64
             os: windows
-
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -44,6 +43,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+     - uses: actions/checkout@v2
+
      - name: Get version
        id: get_version
        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
