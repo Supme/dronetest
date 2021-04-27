@@ -32,7 +32,7 @@ jobs:
 
     - name: Build
       if: startsWith(matrix.os, 'windows') != true
-      run: GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -ldflags "-s -w -linkmode external -extldflags -static -X dronetest/version.number=${{ steps.get_version.outputs.VERSION }} -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }}_${{ matrix.os }}_${{ matrix.arch }} ./main.go
+      run: GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -ldflags "-s -w -X dronetest/version.number=${{ steps.get_version.outputs.VERSION }} -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }}_${{ matrix.os }}_${{ matrix.arch }} ./main.go
 
     - name: Windows build
       if: startsWith(matrix.os, 'windows') == true
