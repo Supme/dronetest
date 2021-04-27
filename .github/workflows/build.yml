@@ -7,6 +7,14 @@ on:
 jobs:
 
   build:
+    strategy:
+      matrix:
+        include:
+          - arch: amd64
+            os: linux
+          - arch: amd64
+            os: windows
+
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -16,18 +24,29 @@ jobs:
       with:
         go-version: 1.16
 
-    - name: Get versions
+    - name: Get version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
     - name: Test
       run: go test -v ./...
 
-    - name: Linux build
-      run: go build -ldflags "-s -w -X dronetest/version.number=${{ steps.get_version.outputs.VERSION }} -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }} ./main.go
+    - name: Build
+      if: startsWith(matrix.os, 'windows') != true
+      run: GOOS=${{ matrix.os }} GOARCH=GOOS=${{ matrix.arch }} go build -ldflags "-s -w -linkmode external -extldflags -static -X dronetest/version.number=${{ steps.get_version.outputs.VERSION }} -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }} ./main.go
 
     - name: Windows build
-      run: GOOS=windows go build -ldflags "-s -w -X dronetest/version.number=${{ steps.get_version.outputs.VERSION }} -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }}.exe ./main.go
+      run: GOOS=${{ matrix.os }} GOARCH=GOOS=${{ matrix.arch }} go build -ldflags "-s -w -linkmode external -extldflags -static -X dronetest/version.number=${{ steps.get_version.outputs.VERSION }}0. -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }}.exe ./main.go
+
+  create-release:
+    name: Release
+    needs: [ build ]
+    runs-on: ubuntu-latest
+
+    steps:
+     - name: Get version
+       id: get_version
+       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
 
     - name: Create release
       run: |
