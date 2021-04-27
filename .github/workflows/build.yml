@@ -89,10 +89,9 @@ jobs:
 
      - name: Create release
        run: |
-         echo "${REPO_NAME}"
+         echo "${{ github.event.repository.name }}"
          gh release create "${{ steps.get_version.outputs.VERSION }}" -t "${{ steps.get_version.outputs.VERSION }}"
          gh release upload "${{ steps.get_version.outputs.VERSION }}" application_* --clobber
          gh release view "${{ steps.get_version.outputs.VERSION }}"
        env:
          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-         REPO_NAME: ${{ github.event.repository.name }}
