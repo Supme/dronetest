@@ -19,7 +19,7 @@ func main() {
 	panic(http.ListenAndServe(listenAddr, nil))
 }
 
-func rootHandler(w http.ResponseWriter, r *http.Request) {
+func rootHandler(w http.ResponseWriter, _ *http.Request) {
 	//w.WriteHeader(http.StatusForbidden)
 	_, err := w.Write([]byte("Hello, world!"))
 	if err != nil {
