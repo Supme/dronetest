@@ -1,3 +1,3 @@
-module github.com/supme/dronetest
+module dronetest
 
 go 1.16

@@ -1,21 +1,16 @@
 package main
 
 import (
+	"dronetest/version"
 	"log"
 	"net/http"
-)
-
-var (
-	version = ""
-	commit  = ""
-	date    = ""
 )
 
 const listenAddr = ":8080"
 
 func main() {
 	http.HandleFunc("/", rootHandler)
-	log.Printf("start Hello, world! (version=%s commit=%s date=%s) on %s", version, commit, date, listenAddr)
+	log.Printf("Start Hello, world! (version=%s commit=%s date=%s) on %s", version.Number(), version.Commit(), version.Date(), listenAddr)
 	panic(http.ListenAndServe(listenAddr, nil))
 }
 
