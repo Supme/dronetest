@@ -24,7 +24,7 @@ jobs:
       run: go test -v ./...
 
     - name: Build
-      run: go build -ldflags "-s -w" -o application_${{ steps.get_version.outputs.VERSION }} ./main.go
+      run: go build -ldflags "-s -w -X version=${{ steps.get_version.outputs.VERSION }} -X commit=`git describe --always` -X date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }} ./main.go
 
     - name: Create release
       run: |

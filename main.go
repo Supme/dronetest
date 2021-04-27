@@ -5,11 +5,17 @@ import (
 	"net/http"
 )
 
+var (
+	version = ""
+	commit  = ""
+	date    = ""
+)
+
 const listenAddr = ":8080"
 
 func main() {
 	http.HandleFunc("/", rootHandler)
-	log.Printf("start webserver on %s", listenAddr)
+	log.Printf("start Hello, world! (version=%s commit=%s date=%s) on %s", version, commit, date, listenAddr)
 	panic(http.ListenAndServe(listenAddr, nil))
 }
 
