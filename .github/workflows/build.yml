@@ -34,9 +34,25 @@ jobs:
       if: startsWith(matrix.os, 'windows') != true
       run: GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -ldflags "-s -w -X dronetest/version.number=${{ steps.get_version.outputs.VERSION }} -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }}_${{ matrix.os }}_${{ matrix.arch }} ./main.go
 
+    - name: Upload build artifact for ${{ matrix.os }} ${{ matrix.arch }}
+      if: startsWith(matrix.os, 'windows') != true
+      uses: actions/upload-artifact@v2
+      with:
+        name: application_${{ steps.get_version.outputs.VERSION }}_${{ matrix.os }}_${{ matrix.arch }}
+        path: ./application_${{ steps.get_version.outputs.VERSION }}_${{ matrix.os }}_${{ matrix.arch }}
+        retention-days: 1
+
     - name: Windows build
       if: startsWith(matrix.os, 'windows') == true
       run: GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -ldflags "-s -w -X dronetest/version.number=${{ steps.get_version.outputs.VERSION }}0. -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }}_${{ matrix.arch }}.exe ./main.go
+
+    - name: Upload build artifact for ${{ matrix.os }} ${{ matrix.arch }}
+      if: startsWith(matrix.os, 'windows') == true
+      uses: actions/upload-artifact@v2
+      with:
+        name: application_${{ steps.get_version.outputs.VERSION }}_${{ matrix.arch }}.exe
+        path: ./application_${{ steps.get_version.outputs.VERSION }}_${{ matrix.arch }}.exe
+        retention-days: 1
 
   create-release:
     name: Release
