@@ -44,7 +44,7 @@ jobs:
 
     - name: Windows build
       if: startsWith(matrix.os, 'windows') == true
-      run: GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -ldflags "-s -w -X dronetest/version.number=${{ steps.get_version.outputs.VERSION }}0. -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }}_${{ matrix.arch }}.exe ./main.go
+      run: GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -ldflags "-s -w -X dronetest/version.number=${{ steps.get_version.outputs.VERSION }} -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }}_${{ matrix.arch }}.exe ./main.go
 
     - name: Upload build artifact for ${{ matrix.os }} ${{ matrix.arch }}
       if: startsWith(matrix.os, 'windows') == true
