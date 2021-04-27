@@ -24,10 +24,10 @@ jobs:
       run: go test -v ./...
 
     - name: Linux build
-      run: go build -ldflags "-s -w -X dronetest/main.number=v.0.0.0 -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }} ./main.go
+      run: go build -ldflags "-s -w -X dronetest/version.number=v.0.0.0 -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }} ./main.go
 
     - name: Windows build
-      run: GOOS=windows go build -ldflags "-s -w -X dronetest/main.number=v.0.0.0 -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }}.exe ./main.go
+      run: GOOS=windows go build -ldflags "-s -w -X dronetest/version.number=v.0.0.0 -X dronetest/version.commit=`git describe --always` -X dronetest/version.date=`date -u +%FT%TZ`" -o application_${{ steps.get_version.outputs.VERSION }}.exe ./main.go
 
     - name: Create release
       run: |
