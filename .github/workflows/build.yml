@@ -78,7 +78,7 @@ jobs:
 
      - name: Create release
        run: |
-         gh release create "${{ steps.get_version.outputs.VERSION }}" -t "${{ steps.get_version.outputs.VERSION }}}"
+         gh release create "${{ steps.get_version.outputs.VERSION }}" -t "${{ steps.get_version.outputs.VERSION }}"
          gh release upload "${{ steps.get_version.outputs.VERSION }}" application_* --clobber
          gh release view "${{ steps.get_version.outputs.VERSION }}"
        env:
