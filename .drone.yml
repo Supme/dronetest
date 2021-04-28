@@ -1,16 +1,10 @@
 kind: pipeline
-name: build
-
-workspace:
-  base: /go
+type: docker
+name: default
 
 steps:
-- name: test
-  image: golang
+- name: greeting
+  image: alpine
   commands:
-  - go test -v 
-- name: start
-  image: golang
-  detach: true
-  commands:
-  - go run
+  - echo hello
+  - echo world
