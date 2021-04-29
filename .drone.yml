@@ -7,4 +7,4 @@ steps:
     image: golang
     commands:
       - go test ./...
-      - go build -ldflags "-s -w -X main.version=`git describe --abbrev=0 --tags` -X main.commit=`git describe --always` -X main.date=`date -u +%FT%TZ`" -o dronetest ./main.go
+      - go build -ldflags "-s -w -X main.version=`git describe --tags` -X main.commit=`git describe --always` -X main.date=`date -u +%FT%TZ`" -o dronetest ./main.go
