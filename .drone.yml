@@ -3,8 +3,8 @@ type: docker
 name: default
 
 steps:
-- name: greeting
-  image: alpine
-  commands:
-  - echo hello
-  - echo world
+  - name: b
+    image: golang
+    commands:
+      - go test ./...
+      - go build go build -ldflags "-s -w -X main.version=`git describe --abbrev=0 --tags` -X main.commit=`git describe --always` -X main.date=`date -u +%FT%TZ`" -o dronetest ./main.go
