@@ -1,3 +1,3 @@
-module dronetest
+module githubactionstest
 
 go 1.16
